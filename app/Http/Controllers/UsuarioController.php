@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class UsuarioController extends Controller
 {
+
+    public function show($id)
+    {
+        $usuario = Usuario::with('postagens')->findOrFail($id);
+        return view('usuarios.show', compact('usuario'));
+    }
     /**
      * Exibir uma lista de usuários.
      */
@@ -37,14 +45,16 @@ class UsuarioController extends Controller
             'telefone' => 'nullable|max:20',
         ]);
 
-        Usuario::create([
+        $usuario = Usuario::create([
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => Hash::make($request->senha),
             'telefone' => $request->telefone,
         ]);
 
-        return redirect()->route('usuarios.index')
+        Auth::login($usuario);
+
+        return redirect()->route('postagens.index')
                          ->with('success', 'Usuário criado com sucesso!');
     }
 
