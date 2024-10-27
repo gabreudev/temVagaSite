@@ -3,8 +3,7 @@
 @section('content')
     <h1 class="text-2xl font-semibold text-gray-900 mb-6">Criar Nova Postagem</h1>
 
-    <form action="{{ route('postagens.store') }}" method="POST" enctype="multipart/form-data" 
-          class="bg-white p-6 rounded-lg shadow-lg">
+    <form action="{{ route('postagens.store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-lg">
         @csrf
 
         <div class="mb-4">
@@ -43,9 +42,10 @@
         </div>
 
         <div class="mb-4">
-            <label for="fotos" class="block text-sm font-medium text-gray-700">Fotos</label>
-            <input type="file" name="fotos[]" id="fotos" multiple
+            <label for="fotos" class="block text-sm font-medium text-gray-700">URLs das Fotos (separadas por vírgula)</label>
+            <input type="text" name="fotos" id="fotos" placeholder="https://exemplo.com/imagem1.jpg, https://exemplo.com/imagem2.jpg"
                    class="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            <p class="text-gray-500 text-sm">Insira as URLs das fotos separadas por vírgula.</p>
         </div>
 
         <button type="submit" 

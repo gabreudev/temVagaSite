@@ -19,4 +19,9 @@ class Postagem extends Model
     {
         return $this->belongsTo(Categoria::class, 'categoria_id');
     }
+    
+    public function fotos()
+    {
+        return $this->hasMany(Foto::class);
+    }
 }

@@ -15,21 +15,33 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen antialiased">
-    <div class="container mx-auto px-6 mt-16">
-        <header class="flex justify-between items-center mb-8">
+    <div class="container mx-auto px-3 mt-8">
+        <header class="flex justify-between items-center mb-2 border-b border-gray-300 pb-6"> 
             <h1 class="text-3xl font-semibold text-gray-900">TemVaga</h1>
             <nav>
-                <a href="{{ route('postagens.index') }}" class="mr-4 text-gray-600 hover:text-gray-900">Postagens</a>
-                <a href="{{ route('categorias.index') }}" class="text-gray-600 hover:text-gray-900">Categorias</a>
+            <a href="{{ route('postagens.index') }}" 
+            class="mr-4 text-gray-900 border-b-4 {{ request()->routeIs('postagens.index') ? 'border-green-300' : 'border-transparent' }} hover:border-green-300">Home</a>
+
+            <a href="{{ route('usuarios.index') }}" 
+            class="mr-4 text-gray-900 border-b-4 {{ request()->routeIs('usuarios.index') ? 'border-green-300' : 'border-transparent' }} hover:border-green-300">Sobre</a>
+
+                @if(Auth::check()) <!-- Verifica se o usuário está logado -->
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md mb-4 inline-block">Logout</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md mb-4 inline-block">Login</a>
+            @endif
+
             </nav>
         </header>
-
         <main>
             @yield('content')
         </main>
 
         <footer class="mt-16 text-center text-sm text-gray-500">
-            © 2024 TemnVaga. Todos os direitos reservados.
+            © 2024 TemVaga. Todos os direitos reservados.
         </footer>
     </div>
 </body>

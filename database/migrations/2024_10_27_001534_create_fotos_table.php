@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('fotos', function (Blueprint $table) {
             $table->id();
+            $table->string('caminho'); 
+            $table->foreignId('postagem_id')->constrained('postagens')->onDelete('cascade');
             $table->timestamps();
         });
     }

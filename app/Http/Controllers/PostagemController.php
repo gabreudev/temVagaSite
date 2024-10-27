@@ -7,6 +7,8 @@ use App\Models\Categoria;
 use App\Models\Foto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 class PostagemController extends Controller
 {
@@ -29,28 +31,41 @@ class PostagemController extends Controller
             'descricao' => 'required',
             'preco' => 'required|numeric',
             'disponivel_a_partir' => 'required|date',
-            'usuario_id' => 'required|exists:usuarios,id',
-            'fotos.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'categoria_id' => 'required|exists:categorias,id',
+            'fotos' => 'nullable|string', // Permite que o campo fotos seja uma string ou nulo
         ]);
-
-        $postagem = Postagem::create($request->only([
-            'titulo', 'descricao', 'preco', 'disponivel_a_partir', 'usuario_id'
-        ]));
-
-        if ($request->hasFile('fotos')) {
-            foreach ($request->file('fotos') as $foto) {
-                $caminho = $foto->store('public/fotos'); // Armazena no diretório 'storage/app/public/fotos'
-
-                Foto::create([
-                    'caminho' => $caminho,
-                    'postagem_id' => $postagem->id
-                ]);
+    
+        $usuario = Auth::user();
+    
+        $postagem = Postagem::create([
+            'titulo' => $request->titulo,
+            'descricao' => $request->descricao,
+            'preco' => $request->preco,
+            'disponivel_a_partir' => $request->disponivel_a_partir,
+            'usuario_id' => $usuario->id,
+            'categoria_id' => $request->categoria_id,
+        ]);
+    
+        // Verifica se o campo fotos está preenchido e não é uma string vazia
+        if ($request->filled('fotos')) {
+            // Divide as URLs por vírgula e remove espaços em branco
+            $fotosUrls = array_map('trim', explode(',', $request->fotos));
+    
+            foreach ($fotosUrls as $fotoUrl) {
+                // Valida a URL antes de criar o registro
+                if (filter_var($fotoUrl, FILTER_VALIDATE_URL)) {
+                    Foto::create([
+                        'caminho' => $fotoUrl,
+                        'postagem_id' => $postagem->id,
+                    ]);
+                }
             }
         }
+    
         return redirect()->route('postagens.index')
                          ->with('success', 'Postagem criada com sucesso!');
     }
-
+    
     public function show($id)
     {
         $postagem = Postagem::with('fotos')->findOrFail($id);
@@ -72,7 +87,8 @@ class PostagemController extends Controller
             'descricao' => 'required',
             'preco' => 'required|numeric',
             'disponivel_a_partir' => 'required|date',
-            'fotos.*' => 'image|mimes:jpeg,png,jpg|max:2048'
+            'fotos.*' => 'url', 
+            'categoria_id' => 'required|exists:categorias,id',
         ]);
 
         $postagem->update($request->only(['titulo', 'descricao', 'preco', 'disponivel_a_partir']));

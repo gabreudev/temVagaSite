@@ -33,7 +33,7 @@ class UsuarioController extends Controller
         $request->validate([
             'nome' => 'required|max:100',
             'email' => 'required|email|unique:usuarios,email',
-            'senha' => 'required|min:6',
+            'senha' => 'required|min:3',
             'telefone' => 'nullable|max:20',
         ]);
 
