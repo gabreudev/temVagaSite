@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Postagem;
+use App\Models\Categoria;
 use App\Models\Foto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,8 @@ class PostagemController extends Controller
 
     public function create()
     {
-        return view('postagens.create');
+        $categorias = Categoria::all(); // Carrega todas as categorias
+        return view('postagens.create', compact('categorias')); 
     }
 
     public function store(Request $request)
@@ -45,7 +47,6 @@ class PostagemController extends Controller
                 ]);
             }
         }
-
         return redirect()->route('postagens.index')
                          ->with('success', 'Postagem criada com sucesso!');
     }
