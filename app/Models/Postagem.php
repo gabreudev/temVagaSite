@@ -12,22 +12,11 @@ class Postagem extends Model
     protected $table = 'postagens';
 
     protected $fillable = [
-        'titulo',
-        'descricao',
-        'preco',
-        'disponivel_a_partir',
-        'usuario_id'
+        'titulo', 'descricao', 'preco', 'disponivel_a_partir', 'usuario_id', 'categoria_id'
     ];
 
-    // Relacionamento: Uma postagem pode ter várias fotos
-    public function fotos()
+    public function categoria()
     {
-        return $this->hasMany(Foto::class, 'postagem_id');
-    }
-
-    // Relacionamento: Uma postagem pertence a um usuário
-    public function usuario()
-    {
-        return $this->belongsTo(Usuario::class, 'usuario_id');
+        return $this->belongsTo(Categoria::class, 'categoria_id');
     }
 }

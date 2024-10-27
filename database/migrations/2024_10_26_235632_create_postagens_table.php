@@ -15,6 +15,7 @@ class CreatePostagensTable extends Migration
             $table->decimal('preco', 10, 2);
             $table->date('disponivel_a_partir');
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
+            $table->foreignId('categoria_id')->constrained('categorias')->onDelete('set null');
             $table->timestamps();
         });
     }

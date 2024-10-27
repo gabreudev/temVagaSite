@@ -12,4 +12,9 @@ class Categoria extends Model
     protected $table = 'categorias';
 
     protected $fillable = ['nome'];
+
+    public function postagens()
+    {
+        return $this->hasMany(Postagem::class, 'categoria_id');
+    }
 }
