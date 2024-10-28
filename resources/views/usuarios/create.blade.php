@@ -30,6 +30,20 @@
                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
         </div>
 
+        <!-- Campo de Descrição -->
+        <div class="mb-4">
+            <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição</label>
+            <textarea name="descricao" id="descricao" rows="3" required
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+         </div>
+
+        <!-- Campo de Número de Contato -->
+        <div class="mb-4">
+            <label for="telefone" class="block text-sm font-medium text-gray-700">Número de Contato</label>
+            <input type="text" name="telefone" id="telefone" required
+                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+
         <button type="submit" 
                 class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md">
             Cadastrar

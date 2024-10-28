@@ -24,6 +24,15 @@ class PostagemController extends Controller
         return view('postagens.create', compact('categorias')); 
     }
 
+    public function complaint(Request $request)
+    {
+        $request->validate([
+            'postagem_id' => 'required|exists:postagens_id'
+        ]);
+
+        
+    }
+
     public function store(Request $request)
     {
         $request->validate([

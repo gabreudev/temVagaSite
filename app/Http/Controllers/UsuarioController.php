@@ -42,7 +42,8 @@ class UsuarioController extends Controller
             'nome' => 'required|max:100',
             'email' => 'required|email|unique:usuarios,email',
             'senha' => 'required|min:3',
-            'telefone' => 'nullable|max:20',
+            'telefone' => 'required|max:20',
+            'descricao' => 'required|max:255',
         ]);
 
         $usuario = Usuario::create([
@@ -50,6 +51,8 @@ class UsuarioController extends Controller
             'email' => $request->email,
             'senha' => Hash::make($request->senha),
             'telefone' => $request->telefone,
+            'banido' => false,
+            'descricao' => $request->descricao,
         ]);
 
         Auth::login($usuario);

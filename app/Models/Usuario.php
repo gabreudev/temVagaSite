@@ -15,7 +15,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
 
     protected $table = 'usuarios';
 
-    protected $fillable = ['nome', 'email', 'senha', 'telefone'];
+    protected $fillable = ['nome', 'email', 'senha', 'telefone', 'descricao'];
 
     public function postagens()
     {

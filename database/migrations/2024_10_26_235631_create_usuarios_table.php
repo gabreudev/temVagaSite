@@ -13,7 +13,9 @@ class CreateUsuariosTable extends Migration
             $table->string('nome', 100);
             $table->string('email', 100)->unique();
             $table->string('senha', 255);
-            $table->string('telefone', 20)->nullable();
+            $table->string('descricao', 255);
+            $table->string('telefone', 20);
+            $table->boolean('banido')->default(false);
             $table->timestamps();
         });
     }
