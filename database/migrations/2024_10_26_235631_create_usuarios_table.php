@@ -16,6 +16,7 @@ class CreateUsuariosTable extends Migration
             $table->string('descricao', 255);
             $table->string('telefone', 20);
             $table->boolean('banido')->default(false);
+            $table->string('etiqueta')->default('user');
             $table->timestamps();
         });
     }
